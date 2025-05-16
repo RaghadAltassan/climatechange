@@ -3,6 +3,15 @@ title: "Exploring Climate Impact in Saudi Arabia  "
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+# هذا تشنك عادي اسمه setup
+library(ggplot2)
+library(dplyr)
+```
+
+```{r open_site, echo=FALSE, include=FALSE}
+browseURL("https://raghadaltassan.github.io/climatechange/")
+```
 ### Problem of the Study
 Climate change has emerged as a global environmental concern, with rising concentrations of greenhouse gases (GHGs)—notably carbon dioxide (CO₂) and methane (CH₄)—accelerating global warming. Saudi Arabia, being one of the world’s top oil producers, faces unique climate challenges due to its arid conditions and industrial activities. This study investigates how CO₂ and CH₄ emissions contribute to temperature changes across the Kingdom using satellite-derived data and spatial analysis.
 

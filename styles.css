@@ -12,3 +12,22 @@
   align-items: center;
   height: auto; /* Ensure the navbar height adapts to the logo size */
 }
+/* ===== Navbar Customization ===== */
+.navbar {
+  background-color: #d9edf4 !important;  /* أزرق فاتح رايق */
+  color: #004466 !important;             /* أزرق داكن للكتابة */
+  border-bottom: 1px solid #bcdff1;      /* خط خفيف تحت البار */
+}
+
+/* الروابط داخل شريط التنقل */
+.navbar a,
+.navbar-brand {
+  color: #004466 !important;
+  font-weight: bold;
+}
+
+/* عند مرور الماوس */
+.navbar a:hover {
+  color: #002233 !important;
+  background-color: rgba(255,255,255,0.3) !important;
+}
