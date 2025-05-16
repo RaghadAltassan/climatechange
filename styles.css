@@ -12,22 +12,21 @@
   align-items: center;
   height: auto; /* Ensure the navbar height adapts to the logo size */
 }
-/* ===== Navbar Customization ===== */
+/* Navbar with RdYlBu gradient */
 .navbar {
-  background-color: #d9edf4 !important;  /* أزرق فاتح رايق */
-  color: #004466 !important;             /* أزرق داكن للكتابة */
-  border-bottom: 1px solid #bcdff1;      /* خط خفيف تحت البار */
+  background: linear-gradient(to right, #D73027, #FFFFBF, #4575B4) !important;
+  color: white;
 }
 
-/* الروابط داخل شريط التنقل */
+/* Link styles inside navbar */
 .navbar a,
 .navbar-brand {
-  color: #004466 !important;
-  font-weight: bold;
+  color: white !important;
 }
 
-/* عند مرور الماوس */
-.navbar a:hover {
-  color: #002233 !important;
-  background-color: rgba(255,255,255,0.3) !important;
+/* Hover and active state */
+.navbar a:hover,
+.navbar .active > a {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: #000000 !important;
 }

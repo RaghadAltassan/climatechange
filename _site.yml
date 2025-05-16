@@ -21,6 +21,5 @@ navbar:
 
 output:
   html_document:
-    theme: flatly
-    highlight: textmate
+    theme: null
     css: styles.css
