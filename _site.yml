@@ -22,4 +22,5 @@ navbar:
 output:
   html_document:
     theme: null
+    highlight: textmate
     css: styles.css
