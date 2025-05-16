@@ -1,29 +1,19 @@
 ---
-title: "Untitled"
+title: "Methodology"
 output: html_document
-date: "2025-04-14"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Methodology
 
-## R Markdown
+This study used Bayesian spatio-temporal modeling to examine the relationship between greenhouse gas emissions and temperature patterns.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+### Key Steps:
+- **Data Collection**: Satellite-derived raster data from NASA Giovanni (CO₂, CH₄, and temperature).
+- **Preprocessing**: Aggregated data by city boundaries using the `raster` and `sf` packages.
+- **Modeling**: Implemented the **INLA** approach for efficient Bayesian inference, accounting for spatial and temporal effects.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Why INLA?
+The Integrated Nested Laplace Approximation (INLA) is ideal for large spatial datasets, offering:
+- Speed and scalability
+- Accurate posterior estimates
+- Flexible modeling of spatial and temporal dependencies

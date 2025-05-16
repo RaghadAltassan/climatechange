@@ -1,29 +1,12 @@
 ---
-title: "Untitled"
+title: "Results"
 output: html_document
-date: "2025-04-14"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Key Findings
 
-## R Markdown
+- **High CO₂ and CH₄ concentrations** were observed in industrial and urban areas.
+- **Surface temperature increases** aligned with emission hotspots.
+- **Spatio-temporal modeling** revealed strong links between GHG emissions and temperature variation.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+These results highlight critical regions that require focused environmental policies and demonstrate how data science can support national sustainability goals.

@@ -2,14 +2,18 @@ name: "my-website"
 navbar:
   title: '<img src="noname.png" alt="GeoHealth" style="height: 100px; width: 100px;">' # Change height and width here to 150px or any size you prefer
   left:
-    - text: "Main"
+    - text: "Overview"
       href: index.html
-    - text: "Hepatitis C"
+    - text: "Temporal"
       href: maps.html
-    - text: "Hepatitis B & Hepatitis C"
+    - text: "Spatial"
       href: method.html
-    - text: "Methodology "
+    - text: "Model Results"
       href: results.html
+    - text: "Forecast"
+      href: Forecast.html
+
+
 
 output:
   html_document:

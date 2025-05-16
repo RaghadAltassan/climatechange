@@ -10,9 +10,8 @@
 
 
 
-<meta name="date" content="2025-04-14" />
 
-<title>Untitled</title>
+<title>Methodology</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -245,16 +244,16 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Main</a>
+  <a href="index.html">Background</a>
 </li>
 <li>
-  <a href="maps.html">Hepatitis C</a>
+  <a href="maps.html">GHGs</a>
 </li>
 <li>
-  <a href="method.html">Hepatitis B &amp; Hepatitis C</a>
+  <a href="method.html">Methodology</a>
 </li>
 <li>
-  <a href="results.html">Methodology </a>
+  <a href="results.html">Results </a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -268,38 +267,34 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Untitled</h1>
-<h4 class="date">2025-04-14</h4>
+<h1 class="title toc-ignore">Methodology</h1>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com"
-class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<div id="methodology" class="section level1">
+<h1>Methodology</h1>
+<p>This study used Bayesian spatio-temporal modeling to examine the
+relationship between greenhouse gas emissions and temperature
+patterns.</p>
+<div id="key-steps" class="section level3">
+<h3>Key Steps:</h3>
+<ul>
+<li><strong>Data Collection</strong>: Satellite-derived raster data from
+NASA Giovanni (CO₂, CH₄, and temperature).</li>
+<li><strong>Preprocessing</strong>: Aggregated data by city boundaries
+using the <code>raster</code> and <code>sf</code> packages.</li>
+<li><strong>Modeling</strong>: Implemented the <strong>INLA</strong>
+approach for efficient Bayesian inference, accounting for spatial and
+temporal effects.</li>
+</ul>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="maps_files/figure-html/pressure-1.png" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the
-code chunk to prevent printing of the R code that generated the
-plot.</p>
+<div id="why-inla" class="section level3">
+<h3>Why INLA?</h3>
+<p>The Integrated Nested Laplace Approximation (INLA) is ideal for large
+spatial datasets, offering: - Speed and scalability - Accurate posterior
+estimates - Flexible modeling of spatial and temporal dependencies</p>
+</div>
 </div>
 
 

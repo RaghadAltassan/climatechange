@@ -1,29 +1,218 @@
 ---
-title: "Untitled"
+title: "GHGs"
 output: html_document
-date: "2025-04-14"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(leaflet)
+library(raster)
+library(terra)
+library(geodata)
+library(sf)
+library(dplyr)
+library(RColorBrewer)
 ```
 
-## R Markdown
+## Emissions and Temperature Maps {.tabset}
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+---
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+### Temperature
 
-```{r cars}
-summary(cars)
+Interactive visualization of land surface temperature across Saudi Arabia (2018–2021).
+
+```{r temperature-map, message=FALSE, warning=FALSE}
+
+# تحميل حدود السعودية للمستوى الإداري الثاني (المدن)
+saudi <- geodata::gadm(country = "SAU", level = 2, path = tempdir())
+saudi_sf <- st_as_sf(saudi)
+
+# تحميل بيانات الراستر لكل سنة
+tem18 <- rast("/Users/raghadaltassan/Desktop/senior project/data/tem18.tif")
+tem19 <- rast("/Users/raghadaltassan/Desktop/senior project/data/tem19.tif")
+tem20 <- rast("/Users/raghadaltassan/Desktop/senior project/data/tem20.tif")
+tem21 <- rast("/Users/raghadaltassan/Desktop/senior project/data/tem21.tif")
+
+# استخراج المتوسطات لكل مدينة
+saudi_sf <- saudi_sf %>%
+  mutate(
+    temp_2018 = extract(tem18, saudi_sf, fun = mean, na.rm = TRUE)[,2],
+    temp_2019 = extract(tem19, saudi_sf, fun = mean, na.rm = TRUE)[,2],
+    temp_2020 = extract(tem20, saudi_sf, fun = mean, na.rm = TRUE)[,2],
+    temp_2021 = extract(tem21, saudi_sf, fun = mean, na.rm = TRUE)[,2]
+  )
+
+# نطاق القيم للتلوين
+all_temp_vals <- c(saudi_sf$temp_2018, saudi_sf$temp_2019, saudi_sf$temp_2020, saudi_sf$temp_2021)
+pal_temp <- colorNumeric(palette = "RdYlBu", domain = all_temp_vals, reverse = TRUE)
+
+# إنشاء الخريطة التفاعلية
+leaflet(data = saudi_sf) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  
+  addPolygons(fillColor = ~pal_temp(temp_2018), color = "white", weight = 1, fillOpacity = 0.7,
+              group = "2018",
+              popup = ~paste0(NAME_2, ": ", round(temp_2018, 2), " °C"),
+              label = ~paste0(NAME_2, ": ", round(temp_2018, 2), " °C"),
+              labelOptions = labelOptions(textsize = "12px")) %>%
+  
+  addPolygons(fillColor = ~pal_temp(temp_2019), color = "white", weight = 1, fillOpacity = 0.7,
+              group = "2019",
+              popup = ~paste0(NAME_2, ": ", round(temp_2019, 2), " °C"),
+              label = ~paste0(NAME_2, ": ", round(temp_2019, 2), " °C"),
+              labelOptions = labelOptions(textsize = "12px")) %>%
+  
+  addPolygons(fillColor = ~pal_temp(temp_2020), color = "white", weight = 1, fillOpacity = 0.7,
+              group = "2020",
+              popup = ~paste0(NAME_2, ": ", round(temp_2020, 2), " °C"),
+              label = ~paste0(NAME_2, ": ", round(temp_2020, 2), " °C"),
+              labelOptions = labelOptions(textsize = "12px")) %>%
+  
+  addPolygons(fillColor = ~pal_temp(temp_2021), color = "white", weight = 1, fillOpacity = 0.7,
+              group = "2021",
+              popup = ~paste0(NAME_2, ": ", round(temp_2021, 2), " °C"),
+              label = ~paste0(NAME_2, ": ", round(temp_2021, 2), " °C"),
+              labelOptions = labelOptions(textsize = "12px")) %>%
+  
+  addLegend(pal = pal_temp, values = all_temp_vals, title = "Temperature (°C)", position = "bottomright") %>%
+  
+  addLayersControl(
+    baseGroups = c("2018", "2019", "2020", "2021"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
 ```
 
-## Including Plots
+---
 
-You can also embed plots, for example:
+### CO₂
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Interactive map showing carbon dioxide concentrations (ppm) in Saudi Arabia between 2018 and 2021.
+
+```{r co2-map, message=FALSE, warning=FALSE}
+saudi <- geodata::gadm("SAU", level = 2, path = tempdir())
+saudi_sf <- st_as_sf(saudi)
+
+# تحميل بيانات CO2 من الراستر واستخراج المتوسط لكل مدينة
+co2_2018_r <- terra::rast("/Users/raghadaltassan/Desktop/senior project/data/co218.tif")
+co2_2019_r <- terra::rast("/Users/raghadaltassan/Desktop/senior project/data/co219.tif")
+co2_2020_r <- terra::rast("/Users/raghadaltassan/Desktop/senior project/data/co220.tif")
+co2_2021_r <- terra::rast("/Users/raghadaltassan/Desktop/senior project/data/co221.tif")
+
+saudi_sf$co2_2018 <- terra::extract(co2_2018_r, saudi_sf, fun = mean, na.rm = TRUE)[, 2]
+saudi_sf$co2_2019 <- terra::extract(co2_2019_r, saudi_sf, fun = mean, na.rm = TRUE)[, 2]
+saudi_sf$co2_2020 <- terra::extract(co2_2020_r, saudi_sf, fun = mean, na.rm = TRUE)[, 2]
+saudi_sf$co2_2021 <- terra::extract(co2_2021_r, saudi_sf, fun = mean, na.rm = TRUE)[, 2]
+
+# تحديد كل القيم لمقياس الألوان
+all_vals <- c(saudi_sf$co2_2018, saudi_sf$co2_2019, saudi_sf$co2_2020, saudi_sf$co2_2021)
+pal <- colorNumeric(palette = c("#DEEBF7", "#3182BD"), domain = all_vals)
+
+# إنشاء خريطة تفاعلية
+leaflet(data = saudi_sf) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(
+    fillColor = ~pal(co2_2018), color = "white", weight = 1, fillOpacity = 0.7,
+    group = "2018",
+    popup = ~paste0(NAME_2, ": ", formatC(co2_2018, format = "f", digits = 7), " ppm"),
+    label = ~paste0(NAME_2, ": ", formatC(co2_2018, format = "f", digits = 7), " ppm"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addPolygons(
+    fillColor = ~pal(co2_2019), color = "white", weight = 1, fillOpacity = 0.7,
+    group = "2019",
+    popup = ~paste0(NAME_2, ": ", formatC(co2_2019, format = "f", digits = 7), " ppm"),
+    label = ~paste0(NAME_2, ": ", formatC(co2_2019, format = "f", digits = 7), " ppm"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addPolygons(
+    fillColor = ~pal(co2_2020), color = "white", weight = 1, fillOpacity = 0.7,
+    group = "2020",
+    popup = ~paste0(NAME_2, ": ", formatC(co2_2020, format = "f", digits = 7), " ppm"),
+    label = ~paste0(NAME_2, ": ", formatC(co2_2020, format = "f", digits = 7), " ppm"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addPolygons(
+    fillColor = ~pal(co2_2021), color = "white", weight = 1, fillOpacity = 0.7,
+    group = "2021",
+    popup = ~paste0(NAME_2, ": ", formatC(co2_2021, format = "f", digits = 7), " ppm"),
+    label = ~paste0(NAME_2, ": ", formatC(co2_2021, format = "f", digits = 7), " ppm"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addLegend(pal = pal, values = all_vals, title = "CO₂ (ppm)", position = "bottomright") %>%
+  addLayersControl(
+    baseGroups = c("2018", "2019", "2020", "2021"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+---
+
+### CH₄
+
+Interactive map showing methane concentrations (ppbv) across Saudi Arabia.
+
+```{r ch4-map, message=FALSE, warning=FALSE}
+
+saudi <- geodata::gadm("SAU", level = 2, path = tempdir())
+saudi_sf <- st_as_sf(saudi)
+
+# تحميل بيانات الراستر للميثان
+ch418 <- rast("/Users/raghadaltassan/Desktop/senior project/data/ch418.tif")
+ch419 <- rast("/Users/raghadaltassan/Desktop/senior project/data/ch419.tif")
+ch420 <- rast("/Users/raghadaltassan/Desktop/senior project/data/ch420.tif")
+ch421 <- rast("/Users/raghadaltassan/Desktop/senior project/data/ch421.tif")
+
+# استخراج المتوسط لكل مدينة
+ch4_df <- saudi_sf %>%
+  mutate(
+    ch4_2018 = extract(ch418, ., fun = mean, na.rm = TRUE)[, 2],
+    ch4_2019 = extract(ch419, ., fun = mean, na.rm = TRUE)[, 2],
+    ch4_2020 = extract(ch420, ., fun = mean, na.rm = TRUE)[, 2],
+    ch4_2021 = extract(ch421, ., fun = mean, na.rm = TRUE)[, 2]
+  )
+
+# إعداد ألوان باستل زرقاء (مثل CO2)
+all_ch4_vals <- c(ch4_df$ch4_2018, ch4_df$ch4_2019, ch4_df$ch4_2020, ch4_df$ch4_2021)
+pretty_vals <- pretty(all_ch4_vals, n = 5)
+pal_ch4 <- colorNumeric(palette = c("#DEEBF7", "#3182BD"), domain = pretty_vals)
+
+# إنشاء الخريطة التفاعلية
+leaflet(ch4_df) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(
+    fillColor = ~pal_ch4(ch4_2018), fillOpacity = 0.7, color = "white", weight = 1,
+    group = "2018",
+    popup = ~paste0(NAME_2, ": ", formatC(ch4_2018, format = "f", digits = 7), " ppbv"),
+    label = ~paste0(NAME_2, ": ", formatC(ch4_2018, format = "f", digits = 7), " ppbv"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addPolygons(
+    fillColor = ~pal_ch4(ch4_2019), fillOpacity = 0.7, color = "white", weight = 1,
+    group = "2019",
+    popup = ~paste0(NAME_2, ": ", formatC(ch4_2019, format = "f", digits = 7), " ppbv"),
+    label = ~paste0(NAME_2, ": ", formatC(ch4_2019, format = "f", digits = 7), " ppbv"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addPolygons(
+    fillColor = ~pal_ch4(ch4_2020), fillOpacity = 0.7, color = "white", weight = 1,
+    group = "2020",
+    popup = ~paste0(NAME_2, ": ", formatC(ch4_2020, format = "f", digits = 7), " ppbv"),
+    label = ~paste0(NAME_2, ": ", formatC(ch4_2020, format = "f", digits = 7), " ppbv"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addPolygons(
+    fillColor = ~pal_ch4(ch4_2021), fillOpacity = 0.7, color = "white", weight = 1,
+    group = "2021",
+    popup = ~paste0(NAME_2, ": ", formatC(ch4_2021, format = "f", digits = 7), " ppbv"),
+    label = ~paste0(NAME_2, ": ", formatC(ch4_2021, format = "f", digits = 7), " ppbv"),
+    labelOptions = labelOptions(textsize = "12px")
+  ) %>%
+  addLegend(
+    pal = pal_ch4, values = pretty_vals, title = "CH₄ (ppbv)",
+    position = "bottomright"
+  ) %>%
+  addLayersControl(
+    baseGroups = c("2018", "2019", "2020", "2021"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+```
