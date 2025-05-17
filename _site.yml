@@ -1,6 +1,6 @@
 name: "my-website"
 navbar:
-  title: '<img src="noname.png" alt="GeoHealth" style="height: 100px; width: 100px;">' # Change height and width here to 150px or any size you prefer
+  title: "<img src='noname.png' alt='GeoHealth' style='height: 100px; width: 100px;'>"
   left:
     - text: "Overview"
       href: index.html
