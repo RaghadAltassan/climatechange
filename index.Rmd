@@ -1,8 +1,10 @@
 ---
-title: "Exploring Climate Impact in Saudi Arabia  "
-output: 
-html_document:
-  css: styles.css
+title: "Exploring Climate Impact in Saudi Arabia"
+output:
+  rmarkdown::html_document:
+    theme: null
+    highlight: textmate
+    css: styles.css
 ---
 
 

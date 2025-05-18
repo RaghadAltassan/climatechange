@@ -12,7 +12,7 @@ navbar:
       href: results.html
     - text: "Forecast"
       href: Forecast.html
-      right:
+  right:
     - text: "Open Site"
       href: "https://raghadaltassan.github.io/climatechange/"
       target: "_blank"

@@ -1,37 +1,30 @@
-/* Import Jua Font */
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Junge&display=swap');
 
-/* Apply the font globally */
 body {
-  font-family: 'Jua', sans-serif;
+    font-family: 'Junge', sans-serif;
+    padding-top: 80px;
 }
 
-/* Adjust the logo size and align it vertically */
 .navbar-brand img {
-  height: 60px !important;
-  width: auto !important;
-  padding-left: 10px;
-  margin-top: -18px;
+    height: 60px !important;
+    width: auto !important;
+    padding-left: 10px;
+    margin-top: -18px;
 }
 
-/* Navbar styling */
 .navbar {
-  display: flex;
-  align-items: center;
-  height: auto;
-  background: linear-gradient(to right, #D73027, #FFFFBF, #4575B4) !important;
-  color: white;
+    display: flex;
+    align-items: center;
+    height: auto;
+    background: linear-gradient(to right, #202124, #f8f9fa, #e9ecef) !important;
+    color: white !important;
 }
 
-/* Link styles inside navbar */
-.navbar a,
-.navbar-brand {
-  color: white !important;
+.navbar a, .navbar-brand {
+    color: white !important;
 }
 
-/* Hover and active state */
-.navbar a:hover,
-.navbar .active > a {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  color: #000000 !important;
+.navbar a:hover, .navbar .active > a {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: #e9ecef !important;
 }
