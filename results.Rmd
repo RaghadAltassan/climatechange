@@ -1,6 +1,8 @@
 ---
 title: "Results"
-output: html_document
+output:
+  html_document:
+    css: styles.css
 ---
 
 # Key Findings

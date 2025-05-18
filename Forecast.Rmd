@@ -1,7 +1,8 @@
 ---
 title: "Forecast"
-output: html_document
-date: "2025-05-16"
+output:
+  html_document:
+    css: styles.css
 ---
 
 ```{r setup, include=FALSE}

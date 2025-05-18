@@ -1,12 +1,9 @@
 ---
 title: "Exploring Climate Impact in Saudi Arabia"
 output:
-  rmarkdown::html_document:
-    theme: null
-    highlight: textmate
+  html_document:
     css: styles.css
 ---
-
 
 ```{r setup, include=FALSE}
 # هذا تشنك عادي اسمه setup
