@@ -17,10 +17,10 @@ navbar:
       href: "https://raghadaltassan.github.io/climatechange/"
       target: "_blank"
 
-
+output_dir: "docs"
 
 output:
   html_document:
-    theme: null
+    theme: cosmo
     highlight: textmate
     css: styles.css
